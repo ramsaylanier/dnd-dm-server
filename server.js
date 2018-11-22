@@ -1,8 +1,11 @@
 const express = require('express')
 const {ApolloServer} = require('apollo-server-express')
-const {typeDefs, resolvers} = require('dnd-dm-graphql-schema')
+const {makeConnectedSchema} = require('dnd-dm-graphql-schema')
 
 const PORT = 4000
+const {typeDefs, resolvers} = makeConnectedSchema({
+  dbOptions: {host: 'mongodb://localhost/', dbName: 'dnd-dm'}
+})
 const server = new ApolloServer({typeDefs, resolvers})
 const app = express()
 server.applyMiddleware({app})
